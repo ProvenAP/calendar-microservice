@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("calendar-microservice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+516a5ab4a4b1d2018d600d2fef61206d42b14d41")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+267523629b47aeaecd4039b3737dd75554c6441d")]
 [assembly: System.Reflection.AssemblyProductAttribute("calendar-microservice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("calendar-microservice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

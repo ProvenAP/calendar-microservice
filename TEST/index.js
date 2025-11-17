@@ -45,6 +45,27 @@ async function Test() {
   console.log(`STATUS: ${response.status}\n`);
 
   /**
+   * LIST ALL EVENTS WITHIN PERIOD
+   * GET /api/events?startTime={START TIME OF SEARCH}&endTime={END TIME OF SEARCH}
+   * Start and end times can be used independently of one another
+   * INCLUDE APP_KEY IN AUTHORIZATION HEADER
+   */
+
+  console.log("GET ALL EVENTS WITHIN PERIOD");
+  console.log("GET /api/events");
+  response = await (
+    await fetch("http://localhost:4350/api/events?startTime=11/15/2025&endTime=11/17/2025", {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: key,
+      },
+    })
+  ).json();
+
+  console.log(`RESPONSE: ${JSON.stringify(response)}\n`);
+
+
+  /**
    * LIST ALL EVENTS
    * GET /api/events
    * INCLUDE APP_KEY IN AUTHORIZATION HEADER
