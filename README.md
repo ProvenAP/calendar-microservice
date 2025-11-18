@@ -7,12 +7,12 @@ Microservice for handling calendar events in the Small Pool project.
 ```mermaid
 sequenceDiagram
     participant Client
-    participant Controllers
-    participant Services
-    participant Models
-    participant Program Root
+    participant ApiController
+    participant DataService
+    participant EventModel
+    participant Program
     participant Database
-    Participant Docker
+    participant DockerCompose
 
     Note right of Client: Sends JSON request to /api/events\nAwaits response
     Note right of ApiController: Receives JSON body\nValidates model\nCalls service layer\nReturns response
@@ -20,23 +20,19 @@ sequenceDiagram
     Note right of EventModel: Represents event data\nUsed by controller/service
     Note right of Program: Configures routing & DI\nLoads appsettings.json
     Note right of Database: Executes SQL\nStores events\nInitialized by init.sql
-    Note right of DockerCompose: Builds microservice image\nStarts service + DB containers\nRuns init.sql on DB start
+    Note right of DockerCompose: Builds microservice image\nStarts containers\nRuns init.sql
 
-    Client --> ApiController : sends JSON /api/events
-    ApiController --> DataService : calls
-    DataService --> Database : executes SQL
-    ApiController --> EventModel : uses
-    DataService --> EventModel : maps data
+    Client ->> ApiController: sends JSON /api/events
+    ApiController ->> DataService: calls
+    DataService ->> Database: executes SQL
+    ApiController ->> EventModel: uses
+    DataService ->> EventModel: maps data
 
-    Program --> ApiController
-    Program --> DataService
-    Program --> AppSettings
+    Program ->> ApiController: registers controller
+    Program ->> DataService: registers service
 
-    DockerCompose --> Database
-    DockerCompose --> InitSQL
-    DockerCompose --> Dockerfile
-    DockerCompose --> Program
-
+    DockerCompose ->> Database: start DB
+    DockerCompose ->> Program: start service
 ```
 
 
