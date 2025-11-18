@@ -4,98 +4,24 @@ Microservice for handling calendar events in the Small Pool project.
 
 ## UML Diagram
 
-```
-classDiagram
-    %% ============================
-    %% CLIENT (TEST folder)
-    %% ============================
-    class Client {
-        <<JavaScript>>
-        TEST/index.js
-        +sendJsonRequest()
-        +awaitResponse()
-    }
+```mermaid
+sequenceDiagram
+    participant Client
+    participant Controllers
+    participant Services
+    participant Models
+    participant Program Root
+    participant Database
+    Participant Docker
 
-    %% ============================
-    %% CONTROLLERS (SRC/Controllers)
-    %% ============================
-    class ApiController {
-        <<C# Controller>>
-        SRC/Controllers/ApiController.cs
-        +GetEvents()
-        +PostEvents()
-        +ReturnResponse()
-    }
+    Note right of Client: Sends JSON request to /api/events\nAwaits response
+    Note right of ApiController: Receives JSON body\nValidates model\nCalls service layer\nReturns response
+    Note right of DataService: Formats SQL queries\nExecutes DB commands\nMaps DB results to models
+    Note right of EventModel: Represents event data\nUsed by controller/service
+    Note right of Program: Configures routing & DI\nLoads appsettings.json
+    Note right of Database: Executes SQL\nStores events\nInitialized by init.sql
+    Note right of DockerCompose: Builds microservice image\nStarts service + DB containers\nRuns init.sql on DB start
 
-    %% ============================
-    %% SERVICES (SRC/Services)
-    %% ============================
-    class DataService {
-        <<C# Service>>
-        SRC/Services/DataService.cs
-        +FormatSqlQuery()
-        +ExecuteQuery()
-    }
-
-    %% ============================
-    %% MODELS (SRC/Models)
-    %% ============================
-    class EventModel {
-        <<C# Model>>
-        SRC/Models/Event.cs
-        +id : int
-        +title : string
-        +date : datetime
-    }
-
-    %% ============================
-    %% PROGRAM ROOT
-    %% ============================
-    class Program {
-        <<C# EntryPoint>>
-        SRC/Program.cs
-        +ConfigureServices()
-        +ConfigureRouting()
-    }
-
-    class AppSettings {
-        appsettings.json
-        +ConnectionStrings
-    }
-
-    %% ============================
-    %% DATABASE
-    %% ============================
-    class Database {
-        <<SQL Database>>
-        Started by Docker
-        +ProcessQueries()
-    }
-
-    class InitSQL {
-        init.sql
-        +CreateTables()
-        +SeedData()
-    }
-
-    %% ============================
-    %% DOCKER
-    %% ============================
-    class DockerCompose {
-        compose.yaml
-        +StartMicroservice()
-        +StartDatabase()
-        +RunInitSQL()
-    }
-
-    class Dockerfile {
-        Dockerfile
-        +BuildMicroserviceImage()
-    }
-
-    %% ============================
-    %% RELATIONSHIPS
-    %% ============================
     Client --> ApiController : sends JSON /api/events
     ApiController --> DataService : calls
     DataService --> Database : executes SQL
