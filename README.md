@@ -27,8 +27,7 @@ outputted to the console to see if the function operated successfully or if an e
       endTime: "Sun, 16 Nov 2025 04:32:33 GMT",
       description: "Test Description",
     }),
-  });
-
+    });
     console.log(`STATUS: ${response.status}\n`);
     ```
   - Example Response:
