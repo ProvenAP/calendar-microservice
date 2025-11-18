@@ -7,7 +7,8 @@ Requests are made to the microservice running at `http://localhost:4350/api/even
 
 ## How to Receive Data From This Microservice
 
-Responses are given in JSON format. The functions called by the user wait for the microservice to.  
+Responses are given in JSON format. The functions called by the user wait for the microservice to send back a response. This response can then be
+outputted to the console to see if the function operated successfully or if an error was caught.
 
 # Example Call
 
@@ -26,7 +27,8 @@ Responses are given in JSON format. The functions called by the user wait for th
       endTime: "Sun, 16 Nov 2025 04:32:33 GMT",
       description: "Test Description",
     }),
-  });
+    });
+    console.log(`STATUS: ${response.status}\n`);
     ```
   - Example Response:
     ```json
